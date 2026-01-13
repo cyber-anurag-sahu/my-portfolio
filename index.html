@@ -28,13 +28,24 @@
             background: rgba(5, 10, 16, 0.85); 
             backdrop-filter: blur(12px); 
             border-bottom: 1px solid rgba(255,255,255,0.05); 
-            height: 70px; /* Fixed height for perfect vertical alignment */
+            height: 70px; 
         }
 
         .top-strap-inner { 
             width: 100%; max-width: 1200px; 
-            display: flex; justify-content: flex-end; align-items: center; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
             height: 100%;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
         }
 
         .top-nav { display: flex; gap: 8px; align-items: center; }
@@ -55,11 +66,13 @@
             transform: translateY(-1px);
         }
 
-        /* Mobile Nav Tweak */
-        @media (max-width: 768px) {
-            .top-strap { overflow-x: auto; justify-content: flex-start; }
-            .top-nav { padding-right: 20px; }
-            .top-nav a { font-size: 0.85rem; padding: 8px 10px; white-space: nowrap; }
+        @media (max-width: 850px) {
+            .brand-name { font-size: 1.2rem; }
+            .top-nav a { padding: 8px 10px; font-size: 0.85rem; }
+        }
+        @media (max-width: 600px) {
+            .top-strap-inner { flex-direction: column; justify-content: center; gap: 5px; }
+            .top-strap { height: auto; padding: 10px; }
         }
 
         /* ---------------------------------------------------------
@@ -69,7 +82,7 @@
             position: relative; z-index: 2; 
             max-width: 1200px; 
             margin: 0 auto;
-            padding: 120px 20px 60px 20px; /* Consistent spacing */
+            padding: 120px 20px 60px 20px; 
             min-height: auto;
         }
 
@@ -82,7 +95,6 @@
             border: 1px solid rgba(255,255,255,0.05); 
         }
 
-        /* Titles - Perfectly aligned */
         .section h2 { 
             margin-top: 0; 
             font-size: 2rem; 
@@ -100,8 +112,8 @@
             display: flex; 
             align-items: center; 
             justify-content: center;
-            min-height: 100vh; /* Full screen height */
-            padding-top: 0; /* Override standard padding for perfect centering */
+            min-height: 100vh; 
+            padding-top: 0; 
         }
 
         .home-inner { 
@@ -114,13 +126,12 @@
 
         .hero-text { flex: 1; max-width: 650px; }
         
-        /* FIX FOR "g" CUTTING OFF */
         h1 { 
             font-size: clamp(2.5rem, 6vw, 4.5rem); 
-            line-height: 1.3; /* Increased line-height to prevent clipping */
+            line-height: 1.3; 
             margin: 0 0 15px 0; 
             color: #fff; 
-            padding-bottom: 5px; /* Extra buffer for descenders */
+            padding-bottom: 5px; 
         }
 
         .hero-name { 
@@ -129,7 +140,7 @@
             background: linear-gradient(90deg, #fff, #b8f0ff); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
-            padding-bottom: 5px; /* Safety padding for gradient text clipping */
+            padding-bottom: 5px; 
         }
 
         h2.role-title { 
@@ -198,7 +209,7 @@
         }
 
         /* ---------------------------------------------------------
-           EDUCATION & EXPERIENCE (Unified Style)
+           EDUCATION & EXPERIENCE
            --------------------------------------------------------- */
         .list-container { display: flex; flex-direction: column; gap: 20px; }
         
@@ -304,6 +315,7 @@
 
     <header class="top-strap">
         <div class="top-strap-inner">
+            <a href="#home" class="brand-name">Anurag Sahu</a>
             <nav class="top-nav">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
@@ -321,7 +333,7 @@
             <div class="hero-text">
                 <h1>Hey, <span class="hero-name">I’m Anurag Sahu</span></h1>
                 <div class="separator">&lt;CODE /&gt;</div>
-                <h2 class="role-title">Data Analyst | Cybersecurity Expert</h2>
+                <h2 class="role-title">Data Analyst | Digital Cyber Crime Analyst</h2>
             </div>
             <img class="hero-photo" src="assets/anu.jpg" alt="Anurag Sahu" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Anurag+Sahu&background=00f3ff&color=000&size=256'">
         </div>
@@ -333,17 +345,17 @@
             <div class="about-layout">
                 <div class="about-left">
                     <p><strong>Hi, I'm Anurag Sahu.</strong></p>
-                    <p>I live at the exciting intersection of breaking things to make them stronger and crunching numbers to find the undeniable truth.</p>
-                    <p>Fueled by an endless stream of data and a relentless dose of curiosity, I am deeply immersed in the converging worlds of Cybersecurity and Data Analytics. For me, technology isn't just a career path; it's a high-stakes puzzle where every line of code tells a story.</p>
-                    <p>I am always looking to collaborate on challenging projects in the private sector that push me to think critically and code creatively.</p>
+                    <p>I operate at the powerful convergence of <strong>Data Analytics</strong> and <strong>Digital Forensics</strong>. While others look at a dataset and see numbers, I see a digital footprint; while others see a security breach, I see a pattern waiting to be decoded.</p>
+                    <p>My expertise lies in blending these two worlds: utilizing advanced data analysis techniques (SQL, Python, Visualization) to accelerate cyber investigations, detect complex fraud anomalies, and reconstruct digital crime scenes. I believe that in the modern landscape, effective security is impossible without deep data intelligence, and valuable data is useless without the security to trust it.</p>
+                    <p>I am eager to apply this hybrid skillset in the private sector, solving high-stakes problems where data accuracy and security resilience are paramount.</p>
                 </div>
                 <aside class="about-right">
                     <h4>My Core Focus</h4>
                     <ul class="focus-list">
-                        <li>Cybersecurity &amp; Ethical Hacking</li>
-                        <li>Data Analysis &amp; Strategic Insight</li>
-                        <li>Vulnerability Assessment</li>
-                        <li>Risk Reduction &amp; Mitigation</li>
+                        <li>Forensic Data Analysis &amp; Recovery</li>
+                        <li>Fraud Detection &amp; Pattern Recognition</li>
+                        <li>Cyber Threat Intelligence (CTI)</li>
+                        <li>Strategic Business &amp; Security Insights</li>
                     </ul>
                 </aside>
             </div>
@@ -427,7 +439,7 @@
                         <div class="item-date">Sep 2025 &ndash; Present</div>
                     </div>
                     <div class="item-desc">
-                        Conducted digital forensic investigations for clients who were victims of cyber fraud, successfully identifying methods of intrusion and recovering critical evidence to support potential legal action.
+                        Conducted digital forensic investigations for clients who were victims of cyber fraud. Successfully traced intrusion methods, recovered compromised data, and compiled evidence reports to support legal action and fund recovery.
                     </div>
                 </div>
 
@@ -452,21 +464,21 @@
             <h2>Projects</h2>
             <div class="proj-grid">
                 <div class="proj-col">
-                    <div class="proj-header osint">Cybersecurity &amp; OSINT</div>
+                    <div class="proj-header osint">Forensics &amp; Investigation</div>
                     
                     <div class="proj-card">
-                        <h3>Instagram Activity Tracker</h3>
-                        <p>Python-based tool to extract and analyze publicly available Instagram data, tracking posting frequency and engagement trends.</p>
+                        <h3>Digital Footprint Tracker</h3>
+                        <p>Python tool designed to extract and correlate user activity across social platforms to aid in identity verification and investigation.</p>
                         <div class="tags">
                             <span>Python</span><span>Selenium</span><span>OSINT</span>
                         </div>
                     </div>
 
                     <div class="proj-card">
-                        <h3>Google Dorks Gathering</h3>
-                        <p>Leveraged advanced Google search operators to collect publicly available information based on name and location.</p>
+                        <h3>Threat Intelligence Gathering</h3>
+                        <p>Automated collection of publicly available threat data using advanced search operators to identify potential leaks and vulnerabilities.</p>
                         <div class="tags">
-                            <span>Google Dorks</span><span>Automation</span>
+                            <span>Google Dorks</span><span>Automation</span><span>Forensics</span>
                         </div>
                     </div>
                 </div>
@@ -483,7 +495,7 @@
                     </div>
 
                     <div class="proj-card">
-                        <h3>Job Market Analytics</h3>
+                        <h3>Job Market Trends Analysis</h3>
                         <p>Analyzed job postings to identify demand trends, salary ranges, and top skills across industries.</p>
                         <div class="tags">
                             <span>Python</span><span>SQL</span><span>Web Scraping</span>
@@ -603,4 +615,3 @@
     </script>
 </body>
 </html>
-
