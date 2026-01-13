@@ -5,485 +5,596 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anurag Sahu - Portfolio</title>
     <style>
+        /* GLOBAL RESET & ALIGNMENT */
+        * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { margin: 0; overflow-x: hidden; font-family: Arial, sans-serif; color: white; }
+        body { 
+            margin: 0; 
+            overflow-x: hidden; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            color: #e0e6ed; 
+            background-color: #050a10; 
+            line-height: 1.6;
+        }
         #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        /* Top strap / header */
-        .top-strap { position: fixed; top: 0; left: 0; right: 0; z-index: 5; display: flex; justify-content: flex-end; padding: 12px 28px; box-sizing: border-box; }
-        .top-strap-inner { width: 100%; max-width: 1300px; margin: 0 auto; display: flex; justify-content: flex-end; }
-        .top-strap { background: linear-gradient(90deg, rgba(6,12,26,0.88), rgba(12,18,30,0.85)); box-shadow: 0 6px 18px rgba(0,0,0,0.6); backdrop-filter: blur(6px); }
-
-        .top-nav { position: static; z-index: 6; display: flex; gap: 12px; align-items:center; }
         
-        /* GENERAL LINK STYLING - UPDATED TO WHITE */
+        /* ---------------------------------------------------------
+           HEADER & NAVIGATION
+           --------------------------------------------------------- */
+        .top-strap { 
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100; 
+            display: flex; justify-content: center; 
+            padding: 0 20px;
+            background: rgba(5, 10, 16, 0.85); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            height: 70px; /* Fixed height for perfect vertical alignment */
+        }
+
+        .top-strap-inner { 
+            width: 100%; max-width: 1200px; 
+            display: flex; justify-content: flex-end; align-items: center; 
+            height: 100%;
+        }
+
+        .top-nav { display: flex; gap: 8px; align-items: center; }
+        
         .top-nav a { 
-            color: white; /* All text white */
+            color: rgba(255,255,255,0.8);
             text-decoration: none; 
-            font-weight: 700; 
-            padding: 10px 14px; 
-            border-radius: 10px; 
-            background: transparent; 
-            transition: background 0.18s, transform 0.12s; 
+            font-weight: 500; 
+            padding: 8px 16px; 
+            border-radius: 6px; 
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
         }
 
-        .top-nav a:focus { outline: 2px solid rgba(255,255,255,0.12); outline-offset: 3px; }
-        
-        /* HOVER EFFECT - Simple white tint for all */
         .top-nav a:hover { 
-            background: rgba(255,255,255,0.15); 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 18px rgba(0,0,0,0.22); 
+            background: rgba(255,255,255,0.1); 
+            color: #fff;
+            transform: translateY(-1px);
         }
 
-        /* (Deleted specific per-item highlight colors) */
-
-        .overlay, .section { position: relative; z-index: 2; max-width: 1200px; }
-
-        /* Home hero: centered, balanced layout */
-        #home.section { display: flex; align-items: center; min-height: 78vh; padding: 6% 8%; }
-        .home-inner { position: relative; max-width: 980px; transform: none; left: auto; top: auto; display: flex; gap: 28px; align-items: center; }
-        .hero-text { flex: 1; }
-        .hero-photo { width: 220px; height: 220px; border-radius: 50%; object-fit: cover; box-shadow: 0 14px 36px rgba(0,0,0,0.6); border: 3px solid rgba(255,255,255,0.06); flex-shrink: 0; }
-        h1 { font-size: clamp(2.4rem, 6.5vw, 4.8rem); line-height: 1.02; margin: 0 0 8px 0; color: #fff; }
-        .home-inner .hero-name { display: block; font-weight: 800; color: #fff; margin-top: 6px; }
-        h2 { font-size: clamp(1rem, 2.2vw, 1.6rem); margin: 8px 0 0 0; color: #ddd; font-weight:600; }
-        .separator { font-size: 1.25rem; margin: 12px 0; color: #9aa4a6; letter-spacing: 2px; }
-        .home-inner p { margin: 0 0 8px 0; }
-        .section { padding: 100px 10%; min-height: 60vh; background: transparent; color: #fff; box-sizing: border-box; }
-        .section-inner { background: rgba(0,0,0,0.45); padding: 28px; border-radius: 12px; box-shadow: 0 6px 30px rgba(0,0,0,0.55); backdrop-filter: blur(6px); }
-
-        /* Education formatting */
-        .edu-list { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
-        .edu-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 14px 18px; background: rgba(255,255,255,0.03); border-radius: 10px; backdrop-filter: blur(3px); }
-        .edu-left h3 { margin: 0; font-size: 1.12rem; color: #fff; }
-        .edu-meta { color: #cfd8dc; font-style: italic; margin-top: 6px; }
-        .edu-right { text-align: right; min-width: 170px; color: #cfd8dc; }
-        .edu-right .edu-dates { font-weight: 700; color: #7CFF3D; }
-        .edu-right .edu-loc { font-size: 0.95rem; margin-top: 6px; color: #bcd8c6; }
-
-        @media (max-width: 720px) {
-            .edu-item { flex-direction: column; align-items: flex-start; }
-            .edu-right { text-align: left; min-width: auto; margin-top: 8px; }
+        /* Mobile Nav Tweak */
+        @media (max-width: 768px) {
+            .top-strap { overflow-x: auto; justify-content: flex-start; }
+            .top-nav { padding-right: 20px; }
+            .top-nav a { font-size: 0.85rem; padding: 8px 10px; white-space: nowrap; }
         }
 
-        /* About formatting (two-column layout) */
-        .about-layout { display: flex; gap: 24px; align-items: flex-start; margin-top: 18px; }
-        .about-left { flex: 1; }
-        .about-right { width: 320px; background: rgba(255,255,255,0.03); padding: 14px 16px; border-radius: 10px; color: #dfffe1; backdrop-filter: blur(4px); }
-        .about-right h4 { margin: 0 0 8px 0; color: #b8ff9b; }
-        .focus-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-        .focus-list li { background: rgba(0,0,0,0.14); padding: 8px 10px; border-radius: 6px; font-weight: 600; color: #fff; }
+        /* ---------------------------------------------------------
+           LAYOUT CONTAINERS
+           --------------------------------------------------------- */
+        .section { 
+            position: relative; z-index: 2; 
+            max-width: 1200px; 
+            margin: 0 auto;
+            padding: 120px 20px 60px 20px; /* Consistent spacing */
+            min-height: auto;
+        }
 
-        @media (max-width: 720px) {
+        .section-inner { 
+            background: rgba(13, 22, 35, 0.6); 
+            padding: 40px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.05); 
+        }
+
+        /* Titles - Perfectly aligned */
+        .section h2 { 
+            margin-top: 0; 
+            font-size: 2rem; 
+            border-bottom: 2px solid rgba(0, 243, 255, 0.15); 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+            color: #fff; 
+            display: inline-block;
+        }
+
+        /* ---------------------------------------------------------
+           HOME HERO SECTION
+           --------------------------------------------------------- */
+        #home { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            min-height: 100vh; /* Full screen height */
+            padding-top: 0; /* Override standard padding for perfect centering */
+        }
+
+        .home-inner { 
+            display: flex; 
+            gap: 50px; 
+            align-items: center; 
+            justify-content: center;
+            width: 100%;
+        }
+
+        .hero-text { flex: 1; max-width: 650px; }
+        
+        /* FIX FOR "g" CUTTING OFF */
+        h1 { 
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            line-height: 1.3; /* Increased line-height to prevent clipping */
+            margin: 0 0 15px 0; 
+            color: #fff; 
+            padding-bottom: 5px; /* Extra buffer for descenders */
+        }
+
+        .hero-name { 
+            display: block; 
+            font-weight: 800; 
+            background: linear-gradient(90deg, #fff, #b8f0ff); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            padding-bottom: 5px; /* Safety padding for gradient text clipping */
+        }
+
+        h2.role-title { 
+            font-size: clamp(1.1rem, 2.5vw, 1.8rem); 
+            margin: 10px 0 0 0; 
+            color: #a4b1cd; 
+            font-weight: 500; 
+            border: none;
+            padding: 0;
+        }
+
+        .separator { 
+            font-size: 1.25rem; 
+            margin: 20px 0; 
+            color: #00f3ff; 
+            letter-spacing: 3px; 
+            font-family: monospace; 
+            opacity: 0.8; 
+        }
+
+        .hero-photo { 
+            width: 260px; height: 260px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); 
+            border: 3px solid rgba(0, 243, 255, 0.3); 
+            flex-shrink: 0; 
+            background: #000; 
+        }
+
+        @media (max-width: 850px) {
+            .home-inner { flex-direction: column-reverse; text-align: center; gap: 30px; }
+            .hero-photo { width: 180px; height: 180px; }
+            .hero-text { margin-top: 10px; }
+        }
+
+        /* ---------------------------------------------------------
+           ABOUT
+           --------------------------------------------------------- */
+        .about-layout { display: flex; gap: 40px; align-items: flex-start; }
+        .about-left { flex: 1; font-size: 1.05rem; color: #cbd5e1; }
+        .about-left p { margin-top: 0; margin-bottom: 20px; }
+        
+        .about-right { 
+            width: 320px; flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2); 
+            padding: 25px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(0, 243, 255, 0.15); 
+        }
+        .about-right h4 { margin: 0 0 15px 0; color: #00f3ff; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; }
+        .focus-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+        .focus-list li { 
+            background: rgba(0, 243, 255, 0.05); 
+            padding: 12px 16px; 
+            border-radius: 6px; 
+            font-weight: 500; 
+            color: #e0e6ed; 
+            border-left: 3px solid rgba(0, 243, 255, 0.4); 
+            font-size: 0.95rem; 
+        }
+
+        @media (max-width: 768px) {
             .about-layout { flex-direction: column; }
-            .about-right { width: auto; }
-            .home-inner { flex-direction: column; gap: 14px; }
-            .hero-photo { width: 160px; height: 160px; }
+            .about-right { width: 100%; }
         }
 
-        /* Certifications list styling */
-        .cert-list { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
-        .cert-item {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            padding: 14px 16px;
-            border-radius: 10px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            border-left: 6px solid rgba(124, 255, 61, 0.12);
-            transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+        /* ---------------------------------------------------------
+           EDUCATION & EXPERIENCE (Unified Style)
+           --------------------------------------------------------- */
+        .list-container { display: flex; flex-direction: column; gap: 20px; }
+        
+        .list-item { 
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; 
+            padding: 20px 25px; 
+            background: rgba(255,255,255,0.02); 
+            border-radius: 10px; 
+            border-left: 3px solid rgba(255,255,255,0.1); 
+            transition: all 0.3s ease;
         }
-        .cert-item:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.45); border-left-color: rgba(124,255,61,0.28); }
-        .cert-item h3 { margin: 0 0 6px 0; font-size: 1.02rem; color: #fff; }
-        .cert-item p { margin: 0; color: #cfd8dc; font-size: 0.98rem; }
-        .cert-item .issuer { color: #bcd8c6; font-weight: 600; font-size: 0.92rem; margin-top: 6px; }
-        @media (max-width:720px) { .cert-item { flex-direction: column; } }
+        .list-item:hover { 
+            background: rgba(255,255,255,0.04); 
+            border-left-color: #00f3ff; 
+            transform: translateX(5px);
+        }
 
-        /* Experience list styling */
-        .exp-list { display: flex; flex-direction: column; gap: 18px; margin-top: 12px; }
-        .exp-item { padding: 14px 10px; border-radius: 8px; background: rgba(255,255,255,0.02); }
-        .exp-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-        .exp-left h3 { margin: 0; font-size: 1.08rem; color: #fff; }
-        .exp-meta { color: #cfd8dc; margin-top: 6px; font-size: 0.95rem; }
-        .exp-right { text-align: right; min-width: 200px; color: #cfd8dc; }
-        .exp-right .exp-dates { font-weight: 700; color: #7CFF3D; }
-        .exp-right .exp-loc { font-size: 0.95rem; margin-top: 6px; color: #bcd8c6; }
-        .exp-desc { margin-top: 12px; color: #cfd8dc; line-height: 1.5; }
-        .exp-divider { height: 1px; background: rgba(255,255,255,0.04); margin: 10px 0; border: none; }
-        @media (max-width:720px) { .exp-row { flex-direction: column; } .exp-right { text-align: left; min-width: auto; margin-top: 8px; } }
+        .item-left h3 { margin: 0 0 5px 0; font-size: 1.2rem; color: #fff; }
+        .item-meta { color: #94a3b8; font-style: italic; font-size: 0.95rem; }
+        
+        .item-right { text-align: right; min-width: 180px; }
+        .item-date { font-weight: 700; color: #00f3ff; font-family: monospace; font-size: 0.95rem; }
+        .item-loc { font-size: 0.9rem; margin-top: 5px; color: #cbd5e1; }
+        
+        .item-desc { 
+            width: 100%; margin-top: 15px; color: #cbd5e1; font-size: 0.95rem; 
+            padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);
+        }
 
-        /* Projects styling */
-        .proj-list { display: flex; flex-direction: column; gap: 16px; margin-top: 12px; }
-        .proj-item { background: rgba(255,255,255,0.02); padding: 16px; border-radius: 10px; }
-        .proj-item h3 { margin: 0 0 8px 0; color: #fff; font-size: 1.06rem; }
-        .proj-desc { margin: 0 0 8px 0; color: #cfd8dc; line-height: 1.45; }
-        .proj-meta { display: flex; gap: 18px; flex-wrap: wrap; color: #bcd8c6; font-weight: 600; }
-        .proj-meta span { background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 8px; }
-        .proj-grid { display: flex; gap: 32px; align-items: flex-start; margin-top: 18px; }
-        .proj-group { flex: 1; margin-top: 0; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.03); background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02)); }
+        @media (max-width: 700px) {
+            .list-item { flex-direction: column; }
+            .item-right { text-align: left; margin-top: 10px; }
+        }
 
-        /* Group-specific accents */
-        .proj-group.osint { border-left: 6px solid rgba(77,138,255,0.14); }
-        .proj-group.data { border-left: 6px solid rgba(184,255,155,0.12); }
+        /* ---------------------------------------------------------
+           CERTIFICATIONS
+           --------------------------------------------------------- */
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .cert-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s;
+        }
+        .cert-card:hover { transform: translateY(-5px); border-color: rgba(0, 243, 255, 0.3); }
+        .cert-card h3 { margin: 0; font-size: 1.1rem; line-height: 1.4; color: #e0e6ed; }
 
-        .proj-group.osint .proj-group-title { color: #4D8AFF; }
-        .proj-group.data .proj-group-title { color: #b8ff9b; }
+        /* ---------------------------------------------------------
+           PROJECTS
+           --------------------------------------------------------- */
+        .proj-grid { display: flex; gap: 30px; align-items: stretch; }
+        .proj-col { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        
+        .proj-header { 
+            font-size: 1.3rem; color: #fff; margin-bottom: 10px; padding-bottom: 10px; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+        }
+        .proj-header.osint { color: #4D8AFF; border-color: rgba(77,138,255,0.3); }
+        .proj-header.data { color: #00ff88; border-color: rgba(0,255,136,0.3); }
 
-        @media (max-width:720px) { .proj-grid { flex-direction: column; } .proj-item { padding: 12px; } }
+        .proj-card { 
+            background: rgba(0,0,0,0.3); padding: 25px; border-radius: 10px; 
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; 
+            flex: 1; /* Makes cards same height */
+        }
+        .proj-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
+        
+        .proj-card h3 { margin: 0 0 10px 0; color: #fff; font-size: 1.15rem; }
+        .proj-card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 15px; }
+        
+        .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tags span { 
+            background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 4px; 
+            font-size: 0.8rem; color: #cbd5e1; font-family: monospace; 
+            border: 1px solid rgba(255,255,255,0.08); 
+        }
 
-        #contact .section-inner { max-width: 600px; }
+        @media (max-width: 800px) { .proj-grid { flex-direction: column; } }
 
-        /* Social / contact icons list */
-        .social-list { list-style: none; padding: 0; margin: 12px 0 0 0; display: flex; flex-direction: column; gap: 10px; }
-        .social-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; background: rgba(255,255,255,0.02); border-left: 4px solid rgba(255,255,255,0.03); transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease; }
-        .social-item:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
-        .social-item svg { width: 20px; height: 20px; flex: 0 0 20px; color: #cfd8dc; }
-        .social-item a { color: #fff; text-decoration: none; font-weight: 700; }
-        .social-item .meta { color: #bcd8c6; font-size: 0.95rem; }
+        /* ---------------------------------------------------------
+           CONTACT
+           --------------------------------------------------------- */
+        .social-container { display: flex; flex-wrap: wrap; gap: 15px; }
+        .social-btn { 
+            display: flex; align-items: center; gap: 12px; 
+            padding: 15px 25px; border-radius: 8px; 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            text-decoration: none; color: #fff; font-weight: 600; 
+            transition: 0.2s; 
+        }
+        .social-btn:hover { 
+            background: rgba(255,255,255,0.08); 
+            border-color: rgba(0, 243, 255, 0.4); 
+            transform: translateY(-3px); 
+        }
+        .social-btn svg { width: 20px; height: 20px; color: #00f3ff; }
 
-        /* per-service accent borders */
-        .si-email { border-left-color: rgba(124,255,61,0.12); }
-        .si-ig { border-left-color: rgba(255,159,67,0.12); }
-        .si-li { border-left-color: rgba(13,102,171,0.12); }
-        .si-gh { border-left-color: rgba(255,255,255,0.06); }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
     <div id="canvas"></div>
 
-    <header class="top-strap" role="banner">
+    <header class="top-strap">
         <div class="top-strap-inner">
-            <nav class="top-nav" aria-label="Primary">
-                <a class="home" href="#home">Home</a>
-                <a class="about" href="#about">About</a>
-                <a class="education" href="#education">Education</a>
-                <a class="certifications" href="#certifications">Certifications</a>
-                <a class="experience" href="#experience">Experience</a>
-                <a class="projects" href="#projects">Projects</a>
-                <a class="contact" href="#contact">Contact</a>
+            <nav class="top-nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
             </nav>
         </div>
     </header>
 
-    <section id="home" class="section" aria-label="Home">
+    <section id="home" class="section">
         <div class="home-inner overlay">
             <div class="hero-text">
-                <h1>Hey,<span class="hero-name">I’m Anurag Sahu</span></h1>
-                <div class="separator">###</div>
-                <h2>I’m a Data Analyst and Cyber security expert</h2>
+                <h1>Hey, <span class="hero-name">I’m Anurag Sahu</span></h1>
+                <div class="separator">&lt;CODE /&gt;</div>
+                <h2 class="role-title">Data Analyst | Cybersecurity Expert</h2>
             </div>
-            <img class="hero-photo" src="assets/anu.jpg" alt="Anurag Sahu profile photo" onerror="this.onerror=null;this.src='assets/profile.svg'">
+            <img class="hero-photo" src="assets/anu.jpg" alt="Anurag Sahu" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Anurag+Sahu&background=00f3ff&color=000&size=256'">
         </div>
     </section>
 
-    <section id="about" class="section" aria-label="About">
+    <section id="about" class="section">
         <div class="section-inner">
             <h2>About</h2>
-
             <div class="about-layout">
                 <div class="about-left">
                     <p><strong>Hi, I'm Anurag Sahu.</strong></p>
                     <p>I live at the exciting intersection of breaking things to make them stronger and crunching numbers to find the undeniable truth.</p>
-                    <p>Fueled by an endless stream of data and a relentless dose of curiosity, I am deeply immersed in the converging worlds of Cybersecurity and Data Analytics. For me, technology isn't just a career path or a subject of study; it's a continuous, high-stakes puzzle where every line of code tells a story, and every vulnerability teaches a lesson. I believe that in the modern digital landscape, you cannot have true intelligence without security, and you cannot have security without understanding the data.</p>
-
-                    <p>I am always looking to collaborate on challenging projects in the private sector that push me to think critically and code creatively. Let's geek out over security protocols, deep-dive into data trends, and build something resilient together.</p>
+                    <p>Fueled by an endless stream of data and a relentless dose of curiosity, I am deeply immersed in the converging worlds of Cybersecurity and Data Analytics. For me, technology isn't just a career path; it's a high-stakes puzzle where every line of code tells a story.</p>
+                    <p>I am always looking to collaborate on challenging projects in the private sector that push me to think critically and code creatively.</p>
                 </div>
-
-                <aside class="about-right" aria-hidden="false">
+                <aside class="about-right">
                     <h4>My Core Focus</h4>
                     <ul class="focus-list">
-                        <li>Cybersecurity &amp; Ethical Hacking — proactive attacker's mindset, web app hardening</li>
-                        <li>Data Analysis &amp; Strategic Insight — SQL, visualization, actionable stories</li>
-                        <li>Vulnerability assessment · Risk reduction · Security-first design</li>
+                        <li>Cybersecurity &amp; Ethical Hacking</li>
+                        <li>Data Analysis &amp; Strategic Insight</li>
+                        <li>Vulnerability Assessment</li>
+                        <li>Risk Reduction &amp; Mitigation</li>
                     </ul>
                 </aside>
             </div>
-
         </div>
     </section>
 
-    <section id="education" class="section" aria-label="Education">
+    <section id="education" class="section">
         <div class="section-inner">
             <h2>Education</h2>
-
-            <div class="edu-list">
-                <div class="edu-item">
-                    <div class="edu-left">
+            <div class="list-container">
+                <div class="list-item">
+                    <div class="item-left">
                         <h3>BCA</h3>
-                        <div class="edu-meta"><em>Regional College of Management</em></div>
+                        <div class="item-meta">Regional College of Management</div>
                     </div>
-                    <div class="edu-right">
-                        <div class="edu-dates">08/2024 &ndash; Present</div>
-                        <div class="edu-loc">Bhubaneswar, Odisha, India</div>
+                    <div class="item-right">
+                        <div class="item-date">08/2024 &ndash; Present</div>
+                        <div class="item-loc">Bhubaneswar, Odisha</div>
                     </div>
                 </div>
 
-                <div class="edu-item">
-                    <div class="edu-left">
+                <div class="list-item">
+                    <div class="item-left">
                         <h3>Intermediate, Commerce</h3>
-                        <div class="edu-meta"><em>St. Patrick's Inter College, Gumla (JAC Board)</em></div>
+                        <div class="item-meta">St. Patrick's Inter College, Gumla (JAC Board)</div>
                     </div>
-                    <div class="edu-right">
-                        <div class="edu-dates">2022 &ndash; 2024</div>
-                        <div class="edu-loc">Gumla, Jharkhand, India · 77.4%</div>
+                    <div class="item-right">
+                        <div class="item-date">2022 &ndash; 2024</div>
+                        <div class="item-loc">Gumla, Jharkhand · 77.4%</div>
                     </div>
                 </div>
 
-                <div class="edu-item">
-                    <div class="edu-left">
+                <div class="list-item">
+                    <div class="item-left">
                         <h3>Matriculation</h3>
-                        <div class="edu-meta"><em>Kendriya Vidyalaya, Gumla (CBSE Board)</em></div>
+                        <div class="item-meta">Kendriya Vidyalaya, Gumla (CBSE Board)</div>
                     </div>
-                    <div class="edu-right">
-                        <div class="edu-dates">Completed 2022</div>
-                        <div class="edu-loc">Gumla, Jharkhand, India · 71.2%</div>
+                    <div class="item-right">
+                        <div class="item-date">Completed 2022</div>
+                        <div class="item-loc">Gumla, Jharkhand · 71.2%</div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section id="certifications" class="section" aria-label="Certifications">
+    <section id="certifications" class="section">
         <div class="section-inner">
             <h2>Certifications</h2>
-            <p>Selected certifications and short descriptions:</p>
-            <div class="cert-list">
-                <div class="cert-item">
-                    <h3>Complete Cyber Security Certification — TheTechUnique Academy</h3>
-                    <p>Comprehensive training in cybersecurity fundamentals, threat detection, and defense mechanisms.</p>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <h3>Complete Cyber Security Certification</h3>
+                    <div style="margin-top:8px; color:#94a3b8; font-size:0.9rem;">TheTechUnique Academy</div>
                 </div>
-
-                <div class="cert-item">
-                    <h3>Digital Cyber Crime Analysis — TheTechUnique Academy</h3>
-                    <p>Practical exposure to cybercrime investigation, digital forensics, and case-based analysis.</p>
+                <div class="cert-card">
+                    <h3>Digital Cyber Crime Analysis</h3>
+                    <div style="margin-top:8px; color:#94a3b8; font-size:0.9rem;">TheTechUnique Academy</div>
                 </div>
-
-                <div class="cert-item">
-                    <h3>Complete Data Analytics Course — Code With Harry</h3>
-                    <p>Hands-on learning in data analysis, visualization, and interpretation using modern tools and techniques.</p>
+                <div class="cert-card">
+                    <h3>Complete Data Analytics Course</h3>
+                    <div style="margin-top:8px; color:#94a3b8; font-size:0.9rem;">Code With Harry</div>
                 </div>
-
-                <div class="cert-item">
-                    <h3>Complete Excel Certification — GoSkills</h3>
-                    <p>Professional-level training in Excel, covering formulas, functions, data analysis, and visualization.</p>
+                <div class="cert-card">
+                    <h3>Complete Excel Certification</h3>
+                    <div style="margin-top:8px; color:#94a3b8; font-size:0.9rem;">GoSkills</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="section" aria-label="Experience">
+    <section id="experience" class="section">
         <div class="section-inner">
             <h2>Experience</h2>
-            <div class="exp-list">
-                <div class="exp-item">
-                    <div class="exp-row">
-                        <div class="exp-left">
-                            <h3>Freelance Cyber Crime Analyst</h3>
-                            <div class="exp-meta"><em>Anurag cyber crime analyst · Freelance</em></div>
-                        </div>
-                        <div class="exp-right">
-                            <div class="exp-dates">Sep 2025 &ndash; Present · 5 mos</div>
-                            <div class="exp-loc">Hybrid</div>
-                        </div>
+            <div class="list-container">
+                <div class="list-item" style="flex-wrap: wrap;">
+                    <div class="item-left">
+                        <h3>Freelance Cyber Crime Analyst</h3>
+                        <div class="item-meta">Freelance</div>
                     </div>
-                    <div class="exp-desc">Conducted digital forensic investigations for clients who were victims of cyber fraud, successfully identifying methods of intrusion and recovering critical evidence to support potential legal action.</div>
+                    <div class="item-right">
+                        <div class="item-date">Sep 2025 &ndash; Present</div>
+                    </div>
+                    <div class="item-desc">
+                        Conducted digital forensic investigations for clients who were victims of cyber fraud, successfully identifying methods of intrusion and recovering critical evidence to support potential legal action.
+                    </div>
                 </div>
 
-                <hr class="exp-divider" />
-
-                <div class="exp-item">
-                    <div class="exp-row">
-                        <div class="exp-left">
-                            <h3>Event Host Volunteer</h3>
-                            <div class="exp-meta"><em>Regional College of Management (RCM), Bhubaneswar</em></div>
-                        </div>
-                        <div class="exp-right">
-                            <div class="exp-dates">Jul 2025 &ndash; Jul 2025 · 1 mo</div>
-                            <div class="exp-loc">Bhubaneswar, Odisha, India · On-site</div>
-                        </div>
+                <div class="list-item" style="flex-wrap: wrap;">
+                    <div class="item-left">
+                        <h3>Event Host Volunteer</h3>
+                        <div class="item-meta">Regional College of Management (RCM)</div>
                     </div>
-                    <div class="exp-desc">Volunteered as an Event Host for the annual College Job Fair, managing registration processes, directing attendees and recruiters, and ensuring a smooth flow of activity throughout the venue.</div>
+                    <div class="item-right">
+                        <div class="item-date">Jul 2025</div>
+                    </div>
+                    <div class="item-desc">
+                        Volunteered as an Event Host for the annual College Job Fair, managing registration processes, directing attendees and recruiters, and ensuring a smooth flow of activity.
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <section id="projects" class="section" aria-label="Projects">
+    <section id="projects" class="section">
         <div class="section-inner">
             <h2>Projects</h2>
-
             <div class="proj-grid">
-            <div class="proj-group osint">
-                <h3 class="proj-group-title">Cybersecurity &amp; OSINT</h3>
-                <div class="proj-list">
-                    <div class="proj-item">
-                        <h3>Instagram Activity Tracker (OSINT Project)</h3>
-                        <p class="proj-desc">Python-based tool to extract and analyze publicly available Instagram data, tracking posting frequency and engagement trends.</p>
-                        <div class="proj-meta">
-                            <span>Tools: Python · Selenium · Pandas · Matplotlib</span>
-                            <span>Skills: OSINT · data extraction · visualization · cyber intelligence</span>
+                <div class="proj-col">
+                    <div class="proj-header osint">Cybersecurity &amp; OSINT</div>
+                    
+                    <div class="proj-card">
+                        <h3>Instagram Activity Tracker</h3>
+                        <p>Python-based tool to extract and analyze publicly available Instagram data, tracking posting frequency and engagement trends.</p>
+                        <div class="tags">
+                            <span>Python</span><span>Selenium</span><span>OSINT</span>
                         </div>
                     </div>
 
-                    <div class="proj-item">
-                        <h3>Google Dorks Information Gathering (OSINT Project)</h3>
-                        <p class="proj-desc">Leveraged advanced Google search operators to collect publicly available information based on name and location, structured into reports.</p>
-                        <div class="proj-meta">
-                            <span>Tools: Google Dorks · Python (automation) · CSV/SQLite</span>
-                            <span>Skills: OSINT · search optimization · data parsing · cyber forensics</span>
+                    <div class="proj-card">
+                        <h3>Google Dorks Gathering</h3>
+                        <p>Leveraged advanced Google search operators to collect publicly available information based on name and location.</p>
+                        <div class="tags">
+                            <span>Google Dorks</span><span>Automation</span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="proj-group data">
-                <h3 class="proj-group-title">Data Analysis &amp; BI</h3>
-                <div class="proj-list">
-                    <div class="proj-item">
+                <div class="proj-col">
+                    <div class="proj-header data">Data Analysis &amp; BI</div>
+                    
+                    <div class="proj-card">
                         <h3>Sales Performance Dashboard</h3>
-                        <p class="proj-desc">Interactive dashboard analyzing retail sales data, highlighting top products, regional trends, and monthly performance.</p>
-                        <div class="proj-meta">
-                            <span>Tools: Excel · Power BI · Tableau</span>
-                            <span>Skills: Data visualization · business intelligence</span>
+                        <p>Interactive dashboard analyzing retail sales data, highlighting top products, regional trends, and monthly performance.</p>
+                        <div class="tags">
+                            <span>Power BI</span><span>Tableau</span><span>Excel</span>
                         </div>
                     </div>
 
-                    <div class="proj-item">
+                    <div class="proj-card">
                         <h3>Job Market Analytics</h3>
-                        <p class="proj-desc">Analyzed job postings to identify demand trends, salary ranges, and top skills across industries and locations.</p>
-                        <div class="proj-meta">
-                            <span>Tools: Python · SQL · Power BI</span>
-                            <span>Skills: Web scraping · data cleaning · exploratory analysis</span>
+                        <p>Analyzed job postings to identify demand trends, salary ranges, and top skills across industries.</p>
+                        <div class="tags">
+                            <span>Python</span><span>SQL</span><span>Web Scraping</span>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-
         </div>
     </section>
 
-    <section id="contact" class="section" aria-label="Contact">
+    <section id="contact" class="section">
         <div class="section-inner">
             <h2>Contact</h2>
-            <ul class="social-list">
-                <li class="social-item si-email">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    <a href="mailto:Sahuanurag2109@proton.me" aria-label="Email">Sahuanurag2109@proton.me</a>
-                </li>
-
-                <li class="social-item si-ig">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 7.5A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm4.7-4.2a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2z"/></svg>
-                    <a href="https://instagram.com/n1byx" target="_blank" rel="noopener noreferrer" aria-label="Instagram">@n1byx</a>
-                </li>
-
-                <li class="social-item si-li">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4.98 3.5C4.98 4.6 4.06 5.5 2.96 5.5S0.95 4.6.95 3.5 1.87 1.5 2.96 1.5s2.02 0.9 2.02 2zM.5 22.5h4.92V8.98H.5V22.5zM8.5 8.98V22.5h4.92v-7.02c0-3.8 5.08-4.11 5.08 0V22.5H23V13.1c0-7.8-8.5-7.5-10.5-3.7V8.98H8.5z"/></svg>
-                    <a href="https://www.linkedin.com/in/anurag-sahu12" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">Anurag Sahu</a>
-                </li>
-
-                <li class="social-item si-gh">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.1-1.2-1.4-1.2-1.4-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6.7 2 1.2.6 1 1.8.7 2.3.5.1-.8.4-1.4.8-1.7-2.6-.3-5.4-1.3-5.4-5.8 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.7.1-3.5 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.9 3 19 3.3 19 3.3c.7 1.8.2 3.2.1 3.5.8.8 1.3 1.9 1.3 3.2 0 4.5-2.8 5.5-5.4 5.8.4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
-                    <a href="https://github.com/cyber-anurag-sahu" target="_blank" rel="noopener noreferrer" aria-label="GitHub">github.com/cyber-anurag-sahu</a>
-                </li>
-            </ul>
+            <div class="social-container">
+                <a href="mailto:Sahuanurag2109@proton.me" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    Sahuanurag2109@proton.me
+                </a>
+                <a href="https://instagram.com/n1byx" target="_blank" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 7.5A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm4.7-4.2a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2z"/></svg>
+                    @n1byx
+                </a>
+                <a href="https://www.linkedin.com/in/anurag-sahu12" target="_blank" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.6 4.06 5.5 2.96 5.5S0.95 4.6.95 3.5 1.87 1.5 2.96 1.5s2.02 0.9 2.02 2zM.5 22.5h4.92V8.98H.5V22.5zM8.5 8.98V22.5h4.92v-7.02c0-3.8 5.08-4.11 5.08 0V22.5H23V13.1c0-7.8-8.5-7.5-10.5-3.7V8.98H8.5z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/cyber-anurag-sahu" target="_blank" class="social-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.1-1.2-1.4-1.2-1.4-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6.7 2 1.2.6 1 1.8.7 2.3.5.1-.8.4-1.4.8-1.7-2.6-.3-5.4-1.3-5.4-5.8 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.7.1-3.5 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.9 3 19 3.3 19 3.3c.7 1.8.2 3.2.1 3.5.8.8 1.3 1.9 1.3 3.2 0 4.5-2.8 5.5-5.4 5.8.4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+                    GitHub
+                </a>
+            </div>
         </div>
     </section>
 
     <script>
-        // Scene setup
         const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x050a10, 0.035);
+
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas').appendChild(renderer.domElement);
 
-        // Add lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
         scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0xffffff, 1);
-        pointLight.position.set(5, 5, 5);
+        const pointLight = new THREE.PointLight(0x00f3ff, 1.5);
+        pointLight.position.set(10, 10, 10);
         scene.add(pointLight);
+        
+        // PARTICLES
+        const particleCount = 700;
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesPos = [];
+        const spread = 70;
+        for (let i = 0; i < particleCount; i++) {
+            particlesPos.push((Math.random() - 0.5) * spread); 
+            particlesPos.push((Math.random() - 0.5) * spread); 
+            particlesPos.push((Math.random() - 0.5) * spread); 
+        }
+        particlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlesPos, 3));
+        const particlesMaterial = new THREE.PointsMaterial({ color: 0x00f3ff, size: 0.15, transparent: true, opacity: 0.6 });
+        const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particleSystem);
 
-        // Create more 3D structures and fill the screen volume (density scales with viewport)
+        // SHAPES
         const shapes = [];
         const geometries = [
             new THREE.IcosahedronGeometry(1, 0),
-            new THREE.OctahedronGeometry(1, 0),
-            new THREE.DodecahedronGeometry(1, 0),
-            new THREE.BoxGeometry(1, 1, 1)
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.OctahedronGeometry(1, 0)
         ];
+        const colors = [0x00f3ff, 0x00ff88, 0xbc13fe];
+        const shapeCount = 35; 
+        const shapeSpread = 50;
 
-        // Compute a shape count based on viewport area, with mobile cap
-        const areaScale = (window.innerWidth * window.innerHeight) / (1920 * 1080);
-        let SHAPE_COUNT = Math.min(240, Math.max(60, Math.floor(80 * areaScale)));
-        if (/Mobi|Android/i.test(navigator.userAgent)) SHAPE_COUNT = Math.min(SHAPE_COUNT, 80);
-
-        const SPREAD = 60; // how far shapes are distributed in each axis
-        for (let i = 0; i < SHAPE_COUNT; i++) {
+        for (let i = 0; i < shapeCount; i++) {
             const geo = geometries[Math.floor(Math.random() * geometries.length)];
-            const material = new THREE.MeshPhongMaterial({
-                color: new THREE.Color().setHSL(Math.random(), 0.6, 0.5),
-                transparent: true,
-                opacity: 0.12,
-                wireframe: Math.random() < 0.22
-            });
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true, transparent: true, opacity: 0.15 });
             const mesh = new THREE.Mesh(geo, material);
-            mesh.position.set(
-                (Math.random() - 0.5) * SPREAD,
-                (Math.random() - 0.5) * SPREAD,
-                (Math.random() - 0.5) * SPREAD
-            );
-            const scale = 0.6 + Math.random() * 3.0;
-            mesh.scale.set(scale, scale, scale);
+            mesh.position.set((Math.random()-0.5)*shapeSpread, (Math.random()-0.5)*shapeSpread, (Math.random()-0.5)*shapeSpread);
+            const s = 0.5 + Math.random() * 2.5;
+            mesh.scale.set(s, s, s);
             scene.add(mesh);
-            shapes.push({ mesh, speed: 0.01 + Math.random() * 0.06, floatAmp: 0.12 + Math.random() * 0.6, rotDir: Math.random() < 0.5 ? 1 : -1 });
+            shapes.push({ mesh: mesh, rotSpeed: { x: (Math.random()-0.5)*0.02, y: (Math.random()-0.5)*0.02 } });
         }
 
-        // Move camera a bit back so the larger volume fits
-        camera.position.z = 40;
-
-        // Mouse interaction variables (scaled for higher sensitivity)
+        camera.position.z = 25;
         let mouseX = 0, mouseY = 0;
-        const MOUSE_SENSITIVITY = 1.6; // increase to make camera more responsive
         document.addEventListener('mousemove', (event) => {
-            mouseX = ((event.clientX / window.innerWidth) * 2 - 1) * MOUSE_SENSITIVITY;
-            mouseY = (-(event.clientY / window.innerHeight) * 2 + 1) * MOUSE_SENSITIVITY;
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
         });
 
-        // Animation loop
         function animate() {
             requestAnimationFrame(animate);
-
-            const t = Date.now() * 0.001;
-
-            // Animate shapes: faster rotation + gentle bobbing for liveliness
-            shapes.forEach((shape, idx) => {
-                const speedBase = 0.02 + (idx % 3) * 0.005;
-                shape.rotation.x += speedBase;
-                shape.rotation.y += speedBase * 1.2;
-
-                // subtle floating motion
-                const floatAmp = 0.25 + (idx % 2) * 0.05;
-                shape.position.y += Math.sin(t * (0.6 + idx * 0.02)) * 0.002 * floatAmp;
-                shape.position.x += Math.cos(t * (0.5 + idx * 0.015)) * 0.002 * floatAmp;
+            const time = Date.now() * 0.0005;
+            shapes.forEach(obj => {
+                obj.mesh.rotation.x += obj.rotSpeed.x;
+                obj.mesh.rotation.y += obj.rotSpeed.y;
+                obj.mesh.position.y += Math.sin(time + obj.mesh.position.x) * 0.01;
             });
-
-            // Interactive camera based on mouse (more sensitive orbit effect)
-            const CAMERA_MULTIPLIER = 14; // how far mouse moves the camera
-            const SMOOTHING = 0.12; // responsiveness (0..1)
-            camera.position.x += (mouseX * CAMERA_MULTIPLIER - camera.position.x) * SMOOTHING;
-            camera.position.y += (mouseY * CAMERA_MULTIPLIER - camera.position.y) * SMOOTHING;
+            particleSystem.rotation.y += 0.001;
+            particleSystem.rotation.x += 0.0005;
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
             camera.lookAt(scene.position);
-
             renderer.render(scene, camera);
         }
         animate();
 
-        // Handle resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
@@ -492,3 +603,4 @@
     </script>
 </body>
 </html>
+
