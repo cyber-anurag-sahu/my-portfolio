@@ -272,7 +272,7 @@
         .proj-card { 
             background: rgba(0,0,0,0.3); padding: 25px; border-radius: 10px; 
             border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; 
-            flex: 1; /* Makes cards same height */
+            flex: 1; 
         }
         .proj-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
         
@@ -289,23 +289,72 @@
         @media (max-width: 800px) { .proj-grid { flex-direction: column; } }
 
         /* ---------------------------------------------------------
-           CONTACT
+           CONTACT (PILL DESIGN)
            --------------------------------------------------------- */
-        .social-container { display: flex; flex-wrap: wrap; gap: 15px; }
-        .social-btn { 
-            display: flex; align-items: center; gap: 12px; 
-            padding: 15px 25px; border-radius: 8px; 
-            background: rgba(255,255,255,0.03); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            text-decoration: none; color: #fff; font-weight: 600; 
-            transition: 0.2s; 
+        #contact .section-inner {
+            text-align: center;
+            padding-top: 50px;
+            padding-bottom: 60px;
         }
-        .social-btn:hover { 
-            background: rgba(255,255,255,0.08); 
-            border-color: rgba(0, 243, 255, 0.4); 
-            transform: translateY(-3px); 
+
+        #contact h2 {
+            display: block;
+            text-align: left;
+            margin-bottom: 40px;
         }
-        .social-btn svg { width: 20px; height: 20px; color: #00f3ff; }
+
+        .contact-subtitle {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            margin: 0 auto 50px auto;
+            max-width: 600px;
+            font-weight: 500;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-pill {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 35px;
+            border-radius: 50px; 
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        /* Dark Button Style */
+        .contact-pill.dark {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .contact-pill.dark:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        /* Primary Highlight Button Style */
+        .contact-pill.primary {
+            background-color: #00f3ff;
+            color: #050a10;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+        .contact-pill.primary:hover {
+            background-color: #fff;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.6);
+            transform: translateY(-4px);
+        }
+
+        .contact-pill svg { width: 22px; height: 22px; }
 
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -345,17 +394,21 @@
             <div class="about-layout">
                 <div class="about-left">
                     <p><strong>Hi, I'm Anurag Sahu.</strong></p>
-                    <p>I operate at the powerful convergence of <strong>Data Analytics</strong> and <strong>Digital Forensics</strong>. While others look at a dataset and see numbers, I see a digital footprint; while others see a security breach, I see a pattern waiting to be decoded.</p>
-                    <p>My expertise lies in blending these two worlds: utilizing advanced data analysis techniques (SQL, Python, Visualization) to accelerate cyber investigations, detect complex fraud anomalies, and reconstruct digital crime scenes. I believe that in the modern landscape, effective security is impossible without deep data intelligence, and valuable data is useless without the security to trust it.</p>
-                    <p>I am eager to apply this hybrid skillset in the private sector, solving high-stakes problems where data accuracy and security resilience are paramount.</p>
+                    <p>I am a professional capable of bridging the gap between two distinct but complementary disciplines: <strong>Data Analytics</strong> and <strong>Digital Cyber Crime Investigation</strong>.</p>
+                    
+                    <p>In the realm of <strong>Data Analytics</strong>, I specialize in transforming raw numbers into actionable business intelligence. Using tools like SQL and Python, I uncover trends, optimize performance, and drive strategic decision-making for business growth.</p>
+                    
+                    <p>Simultaneously, as a <strong>Digital Cyber Crime Analyst</strong>, I apply forensic methodologies to investigate security breaches and financial fraud. My focus here is on evidence recovery, tracing digital footprints, and de-anonymizing threat actors to secure digital environments.</p>
+
+                    <p>By mastering both, I offer a unique advantage: I don't just analyze data for profit; I analyze it for protection.</p>
                 </div>
                 <aside class="about-right">
                     <h4>My Core Focus</h4>
                     <ul class="focus-list">
-                        <li>Forensic Data Analysis &amp; Recovery</li>
-                        <li>Fraud Detection &amp; Pattern Recognition</li>
-                        <li>Cyber Threat Intelligence (CTI)</li>
-                        <li>Strategic Business &amp; Security Insights</li>
+                        <li>Business Intelligence & Strategy</li>
+                        <li>Data Visualization & SQL</li>
+                        <li>Digital Forensics & Evidence</li>
+                        <li>Fraud Detection & OSINT</li>
                     </ul>
                 </aside>
             </div>
@@ -508,21 +561,22 @@
 
     <section id="contact" class="section">
         <div class="section-inner">
-            <h2>Contact</h2>
-            <div class="social-container">
-                <a href="mailto:Sahuanurag2109@proton.me" class="social-btn">
+            <h2>Get In Touch</h2>
+            <p class="contact-subtitle">
+                Currently open for internship and full-time opportunities in Data Analysis and Cybersecurity.
+            </p>
+            <div class="contact-buttons">
+                <a href="mailto:Sahuanurag2109@proton.me" class="contact-pill dark">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    Sahuanurag2109@proton.me
+                    Email Me
                 </a>
-                <a href="https://instagram.com/n1byx" target="_blank" class="social-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 7.5A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm4.7-4.2a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2z"/></svg>
-                    @n1byx
-                </a>
-                <a href="https://www.linkedin.com/in/anurag-sahu12" target="_blank" class="social-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.6 4.06 5.5 2.96 5.5S0.95 4.6.95 3.5 1.87 1.5 2.96 1.5s2.02 0.9 2.02 2zM.5 22.5h4.92V8.98H.5V22.5zM8.5 8.98V22.5h4.92v-7.02c0-3.8 5.08-4.11 5.08 0V22.5H23V13.1c0-7.8-8.5-7.5-10.5-3.7V8.98H8.5z"/></svg>
+                
+                <a href="https://www.linkedin.com/in/anurag-sahu12" target="_blank" class="contact-pill primary">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     LinkedIn
                 </a>
-                <a href="https://github.com/cyber-anurag-sahu" target="_blank" class="social-btn">
+                
+                <a href="https://github.com/cyber-anurag-sahu" target="_blank" class="contact-pill dark">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2.2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.1-1.2-1.4-1.2-1.4-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6.7 2 1.2.6 1 1.8.7 2.3.5.1-.8.4-1.4.8-1.7-2.6-.3-5.4-1.3-5.4-5.8 0-1.3.5-2.4 1.3-3.2-.1-.3-.6-1.7.1-3.5 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.9 3 19 3.3 19 3.3c.7 1.8.2 3.2.1 3.5.8.8 1.3 1.9 1.3 3.2 0 4.5-2.8 5.5-5.4 5.8.4.3.8 1 .8 2v3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
                     GitHub
                 </a>
