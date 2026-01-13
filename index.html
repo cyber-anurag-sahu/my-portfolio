@@ -14,31 +14,29 @@
         .top-strap { background: linear-gradient(90deg, rgba(6,12,26,0.88), rgba(12,18,30,0.85)); box-shadow: 0 6px 18px rgba(0,0,0,0.6); backdrop-filter: blur(6px); }
 
         .top-nav { position: static; z-index: 6; display: flex; gap: 12px; align-items:center; }
-        .top-nav a { color: white; text-decoration: none; font-weight: 700; padding: 10px 14px; border-radius: 10px; background: transparent; transition: background 0.18s, color 0.12s, transform 0.12s; }
+        
+        /* GENERAL LINK STYLING - UPDATED TO WHITE */
+        .top-nav a { 
+            color: white; /* All text white */
+            text-decoration: none; 
+            font-weight: 700; 
+            padding: 10px 14px; 
+            border-radius: 10px; 
+            background: transparent; 
+            transition: background 0.18s, transform 0.12s; 
+        }
+
         .top-nav a:focus { outline: 2px solid rgba(255,255,255,0.12); outline-offset: 3px; }
-        .top-nav a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.22); }
+        
+        /* HOVER EFFECT - Simple white tint for all */
+        .top-nav a:hover { 
+            background: rgba(255,255,255,0.15); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 18px rgba(0,0,0,0.22); 
+        }
 
-        /* Per-item highlight colors using classes */
-        .top-nav a.home { background: rgba(32,201,151,0.12); color: #20C997; }
-        .top-nav a.home:hover { background: rgba(32,201,151,0.28); color: #fff; }
+        /* (Deleted specific per-item highlight colors) */
 
-        .top-nav a.about { background: rgba(77,138,255,0.12); color: #4D8AFF; }
-        .top-nav a.about:hover { background: rgba(77,138,255,0.28); color: #fff; }
-
-        .top-nav a.education { background: rgba(166,108,255,0.12); color: #A66CFF; }
-        .top-nav a.education:hover { background: rgba(166,108,255,0.28); color: #fff; }
-
-        .top-nav a.certifications { background: rgba(255,159,67,0.12); color: #FF9F43; }
-        .top-nav a.certifications:hover { background: rgba(255,159,67,0.28); color: #fff; }
-
-        .top-nav a.experience { background: rgba(45,206,137,0.12); color: #2DCE89; }
-        .top-nav a.experience:hover { background: rgba(45,206,137,0.28); color: #fff; }
-
-        .top-nav a.projects { background: rgba(243,104,224,0.12); color: #F368E0; }
-        .top-nav a.projects:hover { background: rgba(243,104,224,0.28); color: #fff; }
-
-        .top-nav a.contact { background: rgba(166,108,255,0.10); color: #D58DFF; }
-        .top-nav a.contact:hover { background: rgba(166,108,255,0.22); color: #fff; }
         .overlay, .section { position: relative; z-index: 2; max-width: 1200px; }
 
         /* Home hero: centered, balanced layout */
@@ -492,7 +490,5 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
-
-    
 </body>
 </html>
