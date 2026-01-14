@@ -23,6 +23,7 @@ A modern, "page-wise" personal portfolio website designed for a Data Analyst and
 ├── README.md           # Project documentation
 └── assets/
     └── anu.jpg         # Profile picture (replace with your own)
+
 🚀 How to Run
 
 Since this is a static site, it is very easy to run locally.
@@ -93,3 +94,7 @@ The site uses a dark, cyber-security themed palette:
 This project is free to use for personal portfolios.
 
 Developed by Anurag Sahu
+
+    LinkedIn
+
+    GitHub
