@@ -11,7 +11,7 @@
             margin: 0; 
             padding: 0;
             height: 100%;
-            overflow: hidden; /* Prevent scrolling */
+            overflow: hidden; /* Prevent scrolling on body, scroll inside sections */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             color: #e0e6ed; 
             background-color: #050a10; 
@@ -28,7 +28,7 @@
             padding: 0 20px;
             background: rgba(5, 10, 16, 0.95); 
             backdrop-filter: blur(12px); 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
             height: 70px; 
         }
 
@@ -49,6 +49,13 @@
             text-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
             cursor: pointer;
         }
+        
+        /* Accessibility Focus State */
+        a:focus-visible {
+            outline: 2px solid #00f3ff;
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
 
         .top-nav { display: flex; gap: 8px; align-items: center; }
         
@@ -60,18 +67,18 @@
             border-radius: 6px; 
             font-size: 0.95rem;
             transition: all 0.2s ease;
-            cursor: pointer;
         }
 
         .top-nav a:hover, .top-nav a.active-link { 
-            background: rgba(255,255,255,0.1); 
+            background: rgba(255,255,255,0.15); 
             color: #fff;
             transform: translateY(-1px);
         }
         
         .top-nav a.active-link {
             color: #00f3ff;
-            background: rgba(0, 243, 255, 0.1);
+            background: rgba(0, 243, 255, 0.15);
+            font-weight: 700;
         }
 
         @media (max-width: 850px) {
@@ -81,7 +88,6 @@
         @media (max-width: 700px) {
             .top-strap-inner { flex-direction: column; justify-content: center; gap: 5px; }
             .top-strap { height: auto; padding: 10px; }
-            /* For mobile, we need scrollable content area */
             html, body { overflow: auto; }
             .section { min-height: auto; padding-bottom: 40px; }
         }
@@ -93,15 +99,10 @@
             position: relative; z-index: 2; 
             max-width: 1200px; 
             margin: 0 auto;
-            /* Padding top accounts for header */
             padding: 100px 20px 40px 20px; 
             min-height: 100vh;
-            
-            /* HIDE ALL SECTIONS BY DEFAULT */
-            display: none;
-            
-            /* ANIMATION */
-            animation: fadeIn 0.6s ease-out;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-out;
         }
 
         /* SHOW ACTIVE SECTION */
@@ -110,22 +111,23 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* CONTRAST FIX: Increased opacity to 0.85 and darker background */
         .section-inner { 
-            background: rgba(13, 22, 35, 0.7); 
+            background: rgba(5, 10, 16, 0.85); 
             padding: 40px; 
             border-radius: 16px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4); 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255,255,255,0.05); 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255,255,255,0.1); 
             max-height: calc(100vh - 140px);
-            overflow-y: auto; /* Scroll content inside the box if it's too long */
+            overflow-y: auto; 
+            color: #f0f6fc; /* Brighter text for contrast */
         }
         
-        /* Custom scrollbar for inner section */
         .section-inner::-webkit-scrollbar { width: 8px; }
         .section-inner::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         .section-inner::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); border-radius: 4px; }
@@ -133,7 +135,7 @@
         .section h2 { 
             margin-top: 0; 
             font-size: 2rem; 
-            border-bottom: 2px solid rgba(0, 243, 255, 0.15); 
+            border-bottom: 2px solid rgba(0, 243, 255, 0.3); 
             padding-bottom: 15px; 
             margin-bottom: 30px; 
             color: #fff; 
@@ -141,15 +143,13 @@
         }
 
         /* ---------------------------------------------------------
-           HOME HERO SECTION (Special Handling)
+           HOME HERO SECTION
            --------------------------------------------------------- */
         #home { 
-            /* Flex needed for centering, will override block in JS toggle */
             align-items: center; 
             justify-content: center;
             padding-top: 0; 
         }
-        /* Override default active for home to use flex */
         #home.active { display: flex; }
 
         .home-inner { 
@@ -184,8 +184,6 @@
             margin: 10px 0 0 0; 
             color: #a4b1cd; 
             font-weight: 500; 
-            border: none;
-            padding: 0;
         }
 
         .separator { 
@@ -210,7 +208,6 @@
         @media (max-width: 850px) {
             .home-inner { flex-direction: column-reverse; text-align: center; gap: 30px; }
             .hero-photo { width: 180px; height: 180px; }
-            .hero-text { margin-top: 10px; }
         }
 
         /* ---------------------------------------------------------
@@ -220,22 +217,23 @@
         .about-left { flex: 1; font-size: 1.05rem; color: #cbd5e1; }
         .about-left p { margin-top: 0; margin-bottom: 20px; }
         
+        /* CONTRAST FIX: Darker background for side panel */
         .about-right { 
             width: 320px; flex-shrink: 0;
-            background: rgba(0, 0, 0, 0.2); 
+            background: rgba(0, 0, 0, 0.4); 
             padding: 25px; 
             border-radius: 12px; 
-            border: 1px solid rgba(0, 243, 255, 0.15); 
+            border: 1px solid rgba(0, 243, 255, 0.2); 
         }
         .about-right h4 { margin: 0 0 15px 0; color: #00f3ff; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; }
         .focus-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
         .focus-list li { 
-            background: rgba(0, 243, 255, 0.05); 
+            background: rgba(0, 243, 255, 0.08); 
             padding: 12px 16px; 
             border-radius: 6px; 
             font-weight: 500; 
-            color: #e0e6ed; 
-            border-left: 3px solid rgba(0, 243, 255, 0.4); 
+            color: #fff; 
+            border-left: 3px solid #00f3ff; 
             font-size: 0.95rem; 
         }
 
@@ -252,13 +250,13 @@
         .list-item { 
             display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; 
             padding: 20px 25px; 
-            background: rgba(255,255,255,0.02); 
+            background: rgba(255,255,255,0.03); 
             border-radius: 10px; 
             border-left: 3px solid rgba(255,255,255,0.1); 
             transition: all 0.3s ease;
         }
         .list-item:hover { 
-            background: rgba(255,255,255,0.04); 
+            background: rgba(255,255,255,0.06); 
             border-left-color: #00f3ff; 
             transform: translateX(5px);
         }
@@ -272,7 +270,7 @@
         
         .item-desc { 
             width: 100%; margin-top: 15px; color: #cbd5e1; font-size: 0.95rem; 
-            padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
         }
 
         @media (max-width: 700px) {
@@ -285,12 +283,12 @@
            --------------------------------------------------------- */
         .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .cert-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-            padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            padding: 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
             transition: transform 0.3s;
         }
-        .cert-card:hover { transform: translateY(-5px); border-color: rgba(0, 243, 255, 0.3); }
-        .cert-card h3 { margin: 0; font-size: 1.1rem; line-height: 1.4; color: #e0e6ed; }
+        .cert-card:hover { transform: translateY(-5px); border-color: #00f3ff; }
+        .cert-card h3 { margin: 0; font-size: 1.1rem; line-height: 1.4; color: #fff; }
 
         /* ---------------------------------------------------------
            PROJECTS
@@ -302,30 +300,30 @@
             font-size: 1.3rem; color: #fff; margin-bottom: 10px; padding-bottom: 10px; 
             border-bottom: 1px solid rgba(255,255,255,0.1); 
         }
-        .proj-header.osint { color: #4D8AFF; border-color: rgba(77,138,255,0.3); }
-        .proj-header.data { color: #00ff88; border-color: rgba(0,255,136,0.3); }
+        .proj-header.osint { color: #4D8AFF; border-color: rgba(77,138,255,0.5); }
+        .proj-header.data { color: #00ff88; border-color: rgba(0,255,136,0.5); }
 
         .proj-card { 
-            background: rgba(0,0,0,0.3); padding: 25px; border-radius: 10px; 
-            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; 
+            background: rgba(0,0,0,0.4); padding: 25px; border-radius: 10px; 
+            border: 1px solid rgba(255,255,255,0.08); transition: 0.3s; 
             flex: 1; 
         }
-        .proj-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
+        .proj-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-5px); }
         
         .proj-card h3 { margin: 0 0 10px 0; color: #fff; font-size: 1.15rem; }
-        .proj-card p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 15px; }
+        .proj-card p { color: #a4b1cd; font-size: 0.95rem; margin-bottom: 15px; }
         
         .tags { display: flex; gap: 8px; flex-wrap: wrap; }
         .tags span { 
-            background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 4px; 
+            background: rgba(255,255,255,0.08); padding: 5px 10px; border-radius: 4px; 
             font-size: 0.8rem; color: #cbd5e1; font-family: monospace; 
-            border: 1px solid rgba(255,255,255,0.08); 
+            border: 1px solid rgba(255,255,255,0.15); 
         }
 
         @media (max-width: 800px) { .proj-grid { flex-direction: column; } }
 
         /* ---------------------------------------------------------
-           CONTACT (PILL DESIGN)
+           CONTACT
            --------------------------------------------------------- */
         #contact .section-inner {
             text-align: center;
@@ -367,18 +365,16 @@
             border: 1px solid transparent;
         }
 
-        /* Dark Button Style */
         .contact-pill.dark {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255, 255, 255, 0.08);
             color: #fff;
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
         }
         .contact-pill.dark:hover {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-4px);
         }
 
-        /* Primary Highlight Button Style */
         .contact-pill.primary {
             background-color: #00f3ff;
             color: #050a10;
@@ -400,20 +396,20 @@
 
     <header class="top-strap">
         <div class="top-strap-inner">
-            <a onclick="showSection('home')" class="brand-name">Anurag Sahu</a>
-            <nav class="top-nav">
-                <a onclick="showSection('home')" id="nav-home" class="active-link">Home</a>
-                <a onclick="showSection('about')" id="nav-about">About</a>
-                <a onclick="showSection('education')" id="nav-education">Education</a>
-                <a onclick="showSection('certifications')" id="nav-certifications">Certifications</a>
-                <a onclick="showSection('experience')" id="nav-experience">Experience</a>
-                <a onclick="showSection('projects')" id="nav-projects">Projects</a>
-                <a onclick="showSection('contact')" id="nav-contact">Contact</a>
+            <a href="#home" class="brand-name">Anurag Sahu</a>
+            <nav class="top-nav" role="navigation" aria-label="Main Navigation">
+                <a href="#home" id="nav-home">Home</a>
+                <a href="#about" id="nav-about">About</a>
+                <a href="#education" id="nav-education">Education</a>
+                <a href="#certifications" id="nav-certifications">Certifications</a>
+                <a href="#experience" id="nav-experience">Experience</a>
+                <a href="#projects" id="nav-projects">Projects</a>
+                <a href="#contact" id="nav-contact">Contact</a>
             </nav>
         </div>
     </header>
 
-    <section id="home" class="section active">
+    <section id="home" class="section">
         <div class="home-inner overlay">
             <div class="hero-text">
                 <h1>Hey, <span class="hero-name">I’m Anurag Sahu</span></h1>
@@ -618,27 +614,45 @@
     </section>
 
     <script>
-        // PAGE SWITCHING LOGIC
-        function showSection(sectionId) {
-            // 1. Hide all sections
+        // BACK BUTTON & NAVIGATION FIX (ROUTER)
+        function handleRouting() {
+            // 1. Get the hash (e.g., "projects"), default to "home"
+            let hash = window.location.hash.substring(1); 
+            if (!hash) hash = 'home';
+
+            // 2. Hide all sections, Find target
             const sections = document.querySelectorAll('.section');
+            let activeSection = document.getElementById(hash);
+
+            // Fallback if hash is invalid
+            if (!activeSection) {
+                hash = 'home';
+                activeSection = document.getElementById('home');
+            }
+
+            // 3. Show active section
             sections.forEach(sec => sec.classList.remove('active'));
+            activeSection.classList.add('active');
 
-            // 2. Show the selected section
-            const activeSection = document.getElementById(sectionId);
-            if (activeSection) {
-                activeSection.classList.add('active');
-            }
-
-            // 3. Update Navigation Links active state
+            // 4. Update Navigation Links & Accessibility
             const navLinks = document.querySelectorAll('.top-nav a');
-            navLinks.forEach(link => link.classList.remove('active-link'));
-            
-            const activeLink = document.getElementById('nav-' + sectionId);
-            if (activeLink) {
-                activeLink.classList.add('active-link');
-            }
+            navLinks.forEach(link => {
+                link.classList.remove('active-link');
+                link.removeAttribute('aria-current'); // Accessibility Reset
+                
+                // Check if this link corresponds to current hash
+                const linkHref = link.getAttribute('href').substring(1);
+                if (linkHref === hash) {
+                    link.classList.add('active-link');
+                    link.setAttribute('aria-current', 'page'); // Accessibility Set
+                }
+            });
         }
+
+        // Listen for URL changes (Back/Forward button)
+        window.addEventListener('hashchange', handleRouting);
+        // Listen for initial page load
+        window.addEventListener('load', handleRouting);
 
         // THREE.JS BACKGROUND
         const scene = new THREE.Scene();
