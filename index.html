@@ -7,29 +7,36 @@
     <style>
         /* GLOBAL RESET & ALIGNMENT */
         * { box-sizing: border-box; }
+        html {
+            scroll-behavior: smooth;
+        }
         html, body { 
             margin: 0; 
             padding: 0;
-            height: 100%;
-            overflow: hidden; /* Prevent scrolling on body, scroll inside sections */
+            width: 100%;
+            overflow-x: hidden;
+            overflow-y: auto; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             color: #e0e6ed; 
             background-color: #050a10; 
             line-height: 1.6;
         }
+        
+        /* Fixed Background Canvas */
         #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
         
         /* ---------------------------------------------------------
            HEADER & NAVIGATION
            --------------------------------------------------------- */
         .top-strap { 
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100; 
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
             display: flex; justify-content: center; 
             padding: 0 20px;
-            background: rgba(5, 10, 16, 0.95); 
+            background: rgba(5, 10, 16, 0.85); 
             backdrop-filter: blur(12px); 
             border-bottom: 1px solid rgba(255,255,255,0.1); 
             height: 70px; 
+            transition: all 0.3s ease;
         }
 
         .top-strap-inner { 
@@ -38,6 +45,7 @@
             justify-content: space-between; 
             align-items: center; 
             height: 100%;
+            position: relative; /* Needed for mobile menu positioning */
         }
 
         .brand-name {
@@ -48,15 +56,16 @@
             letter-spacing: 0.5px;
             text-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
             cursor: pointer;
+            z-index: 1002; /* Above mobile menu */
         }
         
-        /* Accessibility Focus State */
         a:focus-visible {
             outline: 2px solid #00f3ff;
             outline-offset: 4px;
             border-radius: 4px;
         }
 
+        /* Desktop Nav Styles */
         .top-nav { display: flex; gap: 8px; align-items: center; }
         
         .top-nav a { 
@@ -81,41 +90,71 @@
             font-weight: 700;
         }
 
-        @media (max-width: 850px) {
-            .brand-name { font-size: 1.2rem; }
-            .top-nav a { padding: 8px 10px; font-size: 0.85rem; }
-        }
-        @media (max-width: 700px) {
-            .top-strap-inner { flex-direction: column; justify-content: center; gap: 5px; }
-            .top-strap { height: auto; padding: 10px; }
-            html, body { overflow: auto; }
-            .section { min-height: auto; padding-bottom: 40px; }
+        /* HAMBURGER MENU ICON (Hidden on Desktop) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1002;
+            padding: 5px;
         }
 
         /* ---------------------------------------------------------
-           LAYOUT CONTAINERS (PAGE LOGIC)
+           MOBILE NAVIGATION LOGIC (ANDROID/IOS)
+           --------------------------------------------------------- */
+        @media (max-width: 850px) {
+            .brand-name { font-size: 1.3rem; }
+            
+            /* Show Hamburger Icon */
+            .menu-toggle { display: block; }
+
+            /* Hide Nav Links by default on mobile */
+            .top-nav {
+                position: fixed;
+                top: 0;
+                right: -100%; /* Slide out of view */
+                width: 70%; /* Takes up 70% of screen width */
+                height: 100vh;
+                background: rgba(5, 10, 16, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                gap: 20px;
+                padding: 40px;
+                transition: right 0.4s ease-in-out;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+                border-left: 1px solid rgba(0, 243, 255, 0.2);
+            }
+
+            /* The class 'open' will be added by JS to slide it in */
+            .top-nav.open {
+                right: 0;
+            }
+
+            .top-nav a {
+                font-size: 1.2rem;
+                width: 100%;
+                text-align: center;
+                padding: 15px;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+        }
+
+        /* ---------------------------------------------------------
+           LAYOUT CONTAINERS (SCROLL LOGIC)
            --------------------------------------------------------- */
         .section { 
             position: relative; z-index: 2; 
             max-width: 1200px; 
             margin: 0 auto;
-            padding: 100px 20px 40px 20px; 
-            min-height: 100vh;
-            display: none; /* Hidden by default */
-            animation: fadeIn 0.5s ease-out;
+            padding: 110px 20px 60px 20px; 
+            display: block; 
+            min-height: auto;
         }
 
-        /* SHOW ACTIVE SECTION */
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* CONTRAST FIX: Increased opacity to 0.85 and darker background */
         .section-inner { 
             background: rgba(5, 10, 16, 0.85); 
             padding: 40px; 
@@ -123,15 +162,11 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
             backdrop-filter: blur(15px); 
             border: 1px solid rgba(255,255,255,0.1); 
-            max-height: calc(100vh - 140px);
-            overflow-y: auto; 
-            color: #f0f6fc; /* Brighter text for contrast */
+            color: #f0f6fc; 
+            height: auto;
+            overflow: visible;
         }
         
-        .section-inner::-webkit-scrollbar { width: 8px; }
-        .section-inner::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-        .section-inner::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); border-radius: 4px; }
-
         .section h2 { 
             margin-top: 0; 
             font-size: 2rem; 
@@ -146,11 +181,12 @@
            HOME HERO SECTION
            --------------------------------------------------------- */
         #home { 
+            min-height: 100vh;
+            display: flex;
             align-items: center; 
             justify-content: center;
-            padding-top: 0; 
+            padding-top: 60px; 
         }
-        #home.active { display: flex; }
 
         .home-inner { 
             display: flex; 
@@ -184,15 +220,8 @@
             margin: 10px 0 0 0; 
             color: #a4b1cd; 
             font-weight: 500; 
-        }
-
-        .separator { 
-            font-size: 1.25rem; 
-            margin: 20px 0; 
-            color: #00f3ff; 
-            letter-spacing: 3px; 
-            font-family: monospace; 
-            opacity: 0.8; 
+            border: none; 
+            padding: 0;
         }
 
         .hero-photo { 
@@ -217,7 +246,6 @@
         .about-left { flex: 1; font-size: 1.05rem; color: #cbd5e1; }
         .about-left p { margin-top: 0; margin-bottom: 20px; }
         
-        /* CONTRAST FIX: Darker background for side panel */
         .about-right { 
             width: 320px; flex-shrink: 0;
             background: rgba(0, 0, 0, 0.4); 
@@ -323,12 +351,12 @@
         @media (max-width: 800px) { .proj-grid { flex-direction: column; } }
 
         /* ---------------------------------------------------------
-           NEW CONTACT / CONNECT SECTION
+           CONTACT
            --------------------------------------------------------- */
         #contact {
-            padding: 0; 
-            display: none; 
-            height: 100vh;
+            padding: 100px 20px; 
+            display: flex; 
+            min-height: 80vh;
             width: 100%;
             flex-direction: column;
             justify-content: center;
@@ -336,15 +364,10 @@
             position: relative;
         }
 
-        /* Override generic .section.active to allow flex display */
-        #contact.active {
-            display: flex !important;
-        }
-
         .contact-card {
             width: 100%;
             max-width: 600px;
-            background: rgba(11, 18, 33, 0.75); /* Dark blueish tint */
+            background: rgba(11, 18, 33, 0.75); 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
@@ -354,7 +377,6 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             position: relative;
             z-index: 10;
-            margin-top: 50px;
         }
 
         .contact-card h2 {
@@ -380,7 +402,7 @@
 
         .email-btn {
             display: inline-block;
-            background-color: #2CB1FF; /* Specific blue from reference */
+            background-color: #2CB1FF; 
             color: #050a10;
             font-weight: 700;
             font-size: 1rem;
@@ -424,11 +446,9 @@
         }
 
         .footer-copyright {
-            position: absolute;
-            bottom: 20px;
+            margin-top: 50px;
             font-size: 0.85rem;
             color: #64748b;
-            width: 100%;
             text-align: center;
         }
 
@@ -441,14 +461,19 @@
     <header class="top-strap">
         <div class="top-strap-inner">
             <a href="#home" class="brand-name">Anurag Sahu</a>
+            
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                ☰
+            </button>
+
             <nav class="top-nav" role="navigation" aria-label="Main Navigation">
-                <a href="#home" id="nav-home">Home</a>
-                <a href="#about" id="nav-about">About</a>
-                <a href="#education" id="nav-education">Education</a>
-                <a href="#certifications" id="nav-certifications">Certifications</a>
-                <a href="#experience" id="nav-experience">Experience</a>
-                <a href="#projects" id="nav-projects">Projects</a>
-                <a href="#contact" id="nav-contact">Contact</a>
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#certifications" class="nav-link">Certifications</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </nav>
         </div>
     </header>
@@ -457,8 +482,8 @@
         <div class="home-inner overlay">
             <div class="hero-text">
                 <h1>Hey, <span class="hero-name">I’m Anurag Sahu</span></h1>
-                <div class="separator">&lt;CODE /&gt;</div>
-                <h2 class="role-title">Data Analyst | Cyber Crime  Analyst</h2>
+              
+                <h2 class="role-title">Equipped with dual expertise in Data Analytics and Cyber Crime Investigation</h2>
             </div>
             <img class="hero-photo" src="assets/anu.jpg" alt="Anurag Sahu" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Anurag+Sahu&background=00f3ff&color=000&size=256'">
         </div>
@@ -472,7 +497,7 @@
                     <p><strong>Hi, I'm Anurag Sahu.</strong></p>
                     <p>I am a professional capable of bridging the gap between two distinct but complementary disciplines: <strong>Data Analytics</strong> and <strong>Digital Cyber Crime Investigation</strong>.</p>
                     <p>In the realm of <strong>Data Analytics</strong>, I specialize in transforming raw numbers into actionable business intelligence. Using tools like SQL and Python, I uncover trends, optimize performance, and drive strategic decision-making for business growth.</p>
-                    <p>Simultaneously, as a <strong>Cyber Crime  Analyst</strong>, I apply forensic methodologies to investigate security breaches and financial fraud. My focus here is on evidence recovery, tracing digital footprints, and de-anonymizing threat actors to secure digital environments.</p>
+                    <p>Simultaneously, as a <strong>Cyber Crime Analyst</strong>, I apply forensic methodologies to investigate security breaches and financial fraud. My focus here is on evidence recovery, tracing digital footprints, and de-anonymizing threat actors to secure digital environments.</p>
                     <p>By mastering both, I offer a unique advantage: I don't just analyze data for profit; I analyze it for protection.</p>
                 </div>
                 <aside class="about-right">
@@ -656,47 +681,69 @@
     </section>
 
     <script>
-        // BACK BUTTON & NAVIGATION FIX (ROUTER)
-        function handleRouting() {
-            // 1. Get the hash (e.g., "projects"), default to "home"
-            let hash = window.location.hash.substring(1); 
-            if (!hash) hash = 'home';
+        // ----------------------------------------------------
+        // 1. MOBILE MENU TOGGLE LOGIC
+        // ----------------------------------------------------
+        const menuToggle = document.querySelector('.menu-toggle');
+        const topNav = document.querySelector('.top-nav');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-            // 2. Hide all sections, Find target
-            const sections = document.querySelectorAll('.section');
-            let activeSection = document.getElementById(hash);
+        // Toggle menu open/close on button click
+        menuToggle.addEventListener('click', () => {
+            topNav.classList.toggle('open');
+            // Change icon from ☰ to X (optional visual flair)
+            menuToggle.textContent = topNav.classList.contains('open') ? '✕' : '☰';
+        });
 
-            // Fallback if hash is invalid
-            if (!activeSection) {
-                hash = 'home';
-                activeSection = document.getElementById('home');
-            }
-
-            // 3. Show active section
-            sections.forEach(sec => sec.classList.remove('active'));
-            activeSection.classList.add('active');
-
-            // 4. Update Navigation Links & Accessibility
-            const navLinks = document.querySelectorAll('.top-nav a');
-            navLinks.forEach(link => {
-                link.classList.remove('active-link');
-                link.removeAttribute('aria-current'); // Accessibility Reset
-                
-                // Check if this link corresponds to current hash
-                const linkHref = link.getAttribute('href').substring(1);
-                if (linkHref === hash) {
-                    link.classList.add('active-link');
-                    link.setAttribute('aria-current', 'page'); // Accessibility Set
-                }
+        // Close menu when a link is clicked (UX improvement)
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                topNav.classList.remove('open');
+                menuToggle.textContent = '☰';
             });
-        }
+        });
 
-        // Listen for URL changes (Back/Forward button)
-        window.addEventListener('hashchange', handleRouting);
-        // Listen for initial page load
-        window.addEventListener('load', handleRouting);
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!topNav.contains(e.target) && !menuToggle.contains(e.target) && topNav.classList.contains('open')) {
+                topNav.classList.remove('open');
+                menuToggle.textContent = '☰';
+            }
+        });
 
-        // THREE.JS BACKGROUND
+        // ----------------------------------------------------
+        // 2. SCROLL SPY (Active Link Highlighting)
+        // ----------------------------------------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3 
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => link.classList.remove('active-link'));
+                        
+                        const id = entry.target.getAttribute('id');
+                        const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active-link');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        });
+
+        // ----------------------------------------------------
+        // 3. THREE.JS BACKGROUND
+        // ----------------------------------------------------
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x050a10, 0.035);
 
@@ -712,17 +759,24 @@
         scene.add(pointLight);
         
         // PARTICLES
-        const particleCount = 700;
+        const particleCount = 2000; // Increased to 2000
         const particlesGeometry = new THREE.BufferGeometry();
         const particlesPos = [];
-        const spread = 70;
+        const spread = 80;
         for (let i = 0; i < particleCount; i++) {
             particlesPos.push((Math.random() - 0.5) * spread); 
             particlesPos.push((Math.random() - 0.5) * spread); 
             particlesPos.push((Math.random() - 0.5) * spread); 
         }
         particlesGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particlesPos, 3));
-        const particlesMaterial = new THREE.PointsMaterial({ color: 0x00f3ff, size: 0.15, transparent: true, opacity: 0.6 });
+        
+        const particlesMaterial = new THREE.PointsMaterial({ 
+            color: 0x00f3ff, 
+            size: 0.28,        
+            transparent: true, 
+            opacity: 0.95      
+        });
+        
         const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particleSystem);
 
@@ -766,8 +820,9 @@
             });
             particleSystem.rotation.y += 0.001;
             particleSystem.rotation.x += 0.0005;
-            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
-            camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
+            
+            camera.position.x += (mouseX * 3 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 3 - camera.position.y) * 0.05;
             camera.lookAt(scene.position);
             renderer.render(scene, camera);
         }
