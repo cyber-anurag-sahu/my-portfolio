@@ -224,6 +224,28 @@
             padding: 0;
         }
 
+        /* NEW HIRE ME BUTTON STYLE */
+        .hire-me-btn {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 12px 35px;
+            background: linear-gradient(45deg, #00f3ff, #00ff88);
+            color: #050a10;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .hire-me-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 35px rgba(0, 243, 255, 0.6);
+            background: linear-gradient(45deg, #fff, #b8f0ff);
+        }
+
         .hero-photo { 
             width: 260px; height: 260px; 
             border-radius: 50%; 
@@ -482,8 +504,11 @@
         <div class="home-inner overlay">
             <div class="hero-text">
                 <h1>Hey, <span class="hero-name">I’m Anurag Sahu</span></h1>
-              
+               
                 <h2 class="role-title">Equipped with dual expertise in Data Analytics and Cyber Crime Investigation</h2>
+
+                <a href="#contact" class="hire-me-btn">Hire Me</a>
+
             </div>
             <img class="hero-photo" src="assets/anu.jpg" alt="Anurag Sahu" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=Anurag+Sahu&background=00f3ff&color=000&size=256'">
         </div>
